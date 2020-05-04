@@ -74,7 +74,8 @@ public class Generation {
 	String word="";
 	String []quotation_mark= {"//","/*","*/"};
 	String [] bracket= {"{","}","(",")","[","]"};
-
+	String Location4SeedProgram="D:\\projects";
+	String Location4Mutants="D:\\Data1";
 	int [] op_lo= {
 			1,1,1,1,1,1,1,1,1,1,
 			1,1,1,1,1,1,1,1,1,1,
@@ -646,11 +647,11 @@ public class Generation {
 					start =System.currentTimeMillis();
 					CompilationUnit cu=createCompilationUnit(icu);
 					System.out.println(cu.getJavaElement().getElementName()+"  ------  Begin");			
-					String path="D:\\data1\\"+icu.getElementName();	
+					String path=Location4Mutants+icu.getElementName();	
 					File code=new File(path);
 					code.createNewFile();
-					String libs=getClasspath("D:\\projects"+project.getFullPath().toOSString()+"\\lib");
-					path+=" -classpath \""+libs+"D:\\projects"+project.getFullPath().toString()+"/src/\"";
+					String libs=getClasspath(Location4SeedProgram+project.getFullPath().toOSString()+"\\lib");
+					path+=" -classpath \""+libs+Location4SeedProgram+project.getFullPath().toString()+"/src/\"";
 					String res=compileCode(cu.toString(),path);
 					
 					if(calLineNum(res)!=-1) {System.out.println(icu.getElementName()+"有错误");continue;}
@@ -743,13 +744,10 @@ public class Generation {
 						FileWriter fw=new FileWriter(code);
 						fw.write(source);
 						fw.close();
-//						System.out.println("代码处理完成");
-						//path+=" -classpath \"C:\\Programs\\eclipse oxygen\\runtime-EclipseApplication"+project.getFullPath().toString()+"/src/\"";
-						//C:\DataG\projects
-						libs=getClasspath("D:\\projects"+project.getFullPath().toOSString()+"\\lib");
-						path="D:\\data1\\"+icu.getElementName();
-						path+=" -classpath \""+libs+"D:\\projects"+project.getFullPath().toString()+"/src/\"";
-						//System.out.println(path);
+						
+						libs=getClasspath(Location4SeedProgram+project.getFullPath().toOSString()+"\\lib");
+						path=Location4Mutants+icu.getElementName();
+						path+=" -classpath \""+libs+Location4SeedProgram+project.getFullPath().toString()+"/src/\"";
 						res=compileCode(cu.toString(),path);
 						String res2=javaccode("",path);
 //						mu_total++;
